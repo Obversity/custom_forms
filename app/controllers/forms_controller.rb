@@ -7,4 +7,8 @@ class FormsController < ApplicationController
 #     def forms_params
 #
 #     end
+
+  def submit
+    binding.pry
+  end
 end
