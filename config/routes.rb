@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :forms do
     collection do
       post 'submit'
+      get 'read/:submission_id' => 'forms#read'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
