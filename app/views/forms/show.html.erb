@@ -1,9 +1,24 @@
 <h1><%= @form.title %></h1>
 <p><%= @form.description %></p>
 
+<%
+if !session[:errors].nil?
+  errors = session[:errors]
+  session[:errors] = nil
+end
+if !session[:submission].nil?
+  data = session[:submission]
+  session[:submission] = nil
+end
+%>
+
+<% errors.each do |error| %>
+  <%= error %>
+<% end %>
+
 <%= simple_form_for :submission, url: "submit" do |f| %>
   <% @form.fields.each do |field| %>
-    <%= f.input field.id.to_s.to_sym, as: field.field_type, label: field.label, hint: field.hint, placeholder: field.placeholder %>
+    <%= f.input field.id.to_s.to_sym, as: field.field_type, label: field.label, hint: field.hint, placeholder: field.placeholder, input_html: {value: data[field.id.to_s] || ''} %>
   <% end %>
   <%= f.input :form_id,as: :hidden, input_html: {value: @form.id.to_s} %>
   <%= f.submit %>
