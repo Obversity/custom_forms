@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  field_type: MyString
+  label: MyString
+  hint: MyText
+  ordinal: 1
+  required: false
+  placeholder: MyText
+  class_name: MyString
+  wrapper_class: MyString
+
+two:
+  field_type: MyString
+  label: MyString
+  hint: MyText
+  ordinal: 1
+  required: false
+  placeholder: MyText
+  class_name: MyString
+  wrapper_class: MyString

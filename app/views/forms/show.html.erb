@@ -1,0 +1,8 @@
+<h1><%= @form.title %></h1>
+<p><%= @form.description %></p>
+
+<%= simple_form_for :submission, url: "something" do |f| %>
+  <% @form.fields.each do |field| %>
+    <%= f.input field.id.to_s.to_sym, as: field.field_type, label: field.label, hint: field.hint, placeholder: field.placeholder %>
+  <% end %>
+<% end %>
