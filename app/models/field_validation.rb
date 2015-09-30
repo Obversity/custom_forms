@@ -10,7 +10,6 @@ class FieldValidation < ActiveRecord::Base
     6=>'length'
   }
 
-
   def self.required(value)
     return !value.blank?
   end
