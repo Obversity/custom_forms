@@ -4,6 +4,9 @@ class FormsController < ApplicationController
     @form = Form.find(params[:id])
   end
 
+  def create
+  end
+
 #   private
 #     def forms_params
 #
@@ -16,6 +19,25 @@ class FormsController < ApplicationController
 
     # get the data that was submitted
     data = params[:submission]
+
+    matches = {}
+
+    data.keys.each do |key|
+
+      match = key.match(/(^(\d)\((.*)\))/)
+      unless match.nil?
+
+        unless matches[match[2]].nil?
+          data[key] = "#{matches[match[2]]} #{data[key]}"
+        end
+
+        matches[match[2]] = data[key]
+        data[key] = nil
+      end
+
+      data.merge!(matches)
+
+    end
 
     # make sure that errors is defined as an array, otherwise things will break
     errors = []
