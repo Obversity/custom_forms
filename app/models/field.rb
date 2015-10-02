@@ -6,6 +6,10 @@ class Field < ActiveRecord::Base
   TYPES = {
     "string" => "Text",
     "text" => "Textbox",
+    "email" => 'Email',
+    "url" => 'URL',
+    'tel' => 'Phone',
+    "integer" => 'Number',
     "boolean" => "Checkbox"
   }
 
