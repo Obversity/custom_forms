@@ -1,7 +1,7 @@
 
-<% @submission.form.fields.each do |field| %>
+<% @sub.form.fields.each do |field| %>
 <%
-  data = JSON.parse @submission.data
+  data = JSON.parse @sub.data
  %>
   <h4><%= field.label %></h4>
   <%= data[field.id.to_s] %>

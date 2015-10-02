@@ -5,13 +5,7 @@
   </p>
 </header>
 
-<%
-  @errors = @errors || []
-  @submission = @submission || {}
 
- %>
-
-<%= binding.pry %>
 
 <% if !@errors.empty? %>
 <div class="errors">
@@ -23,10 +17,16 @@
 <% end %>
 <div id="fields">
   <%= simple_form_for :submission, url: "submit" do |f| %>
+
     <div class="the-fields">
       <% @form.fields.each do |field| %>
         <div class="field">
-          <%= f.input field.id.to_s.to_sym, as: field.field_type, label: field.label, hint: field.hint, placeholder: field.placeholder, input_html: {value: @submission[field.id.to_s]} %>
+          <%= f.input field.id.to_s.to_sym,
+          as: field.field_type,
+          label: field.label,
+          hint: field.hint,
+          placeholder: field.placeholder,
+          input_html: {value: @sub[field.id.to_s.to_sym]} %>
           <% if @errors[field.id].present? %>
             <div class="inline-errors">
               <%= "This field #{@errors[field.id].flatten.to_sentence}" %>

@@ -6,6 +6,8 @@ class FormsController < ApplicationController
 
   def show
     @form = Form.find(params[:id])
+    @errors = {}
+    @sub = {}
   end
 
   def new
@@ -24,25 +26,25 @@ class FormsController < ApplicationController
 
 
     # get the data that was submitted
-    @submission = params[:submission]
+    @sub = params[:submission]
 
     matches = {}
 
     #Date input matching stuff?
-    @submission.keys.each do |key|
+    @sub.keys.each do |key|
 
       match = key.match(/(^(\d)\((.*)\))/)
       unless match.nil?
 
         unless matches[match[2]].nil?
-          @ubmission[key] = "#{matches[match[2]]} #{submission[key]}"
+          @sub[key] = "#{matches[match[2]]} #{@sub[key]}"
         end
 
-        matches[match[2]] = @submission[key]
-        @submission[key] = nil
+        matches[match[2]] = @sub[key]
+        @sub[key] = nil
       end
 
-      @submission.merge!(matches)
+      @sub.merge!(matches)
 
     end
 
@@ -51,17 +53,15 @@ class FormsController < ApplicationController
 
     # validate each field
     @form.fields.each do |field|
-      field_data = @submission[field.id.to_s]
+      field_data = @sub[field.id.to_s]
       field_errors = field.errors2(field_data)
       @errors[field.id] = field_errors if !field_errors.empty?
     end
 
-    binding.pry
-
     # if we have no errors, submit the form; otherwise reject the submission
     if @errors.length == 0
-      @submission = Submission.create(data: @submission.to_json, form: @form)
-      redirect_to "/forms/read/#{@submission.id}"
+      @sub = Submission.create(data: @sub.to_json, form: @form)
+      redirect_to "/forms/read/#{@sub.id}"
     else
       render :show
     end
@@ -69,7 +69,7 @@ class FormsController < ApplicationController
   end
 
   def read
-    @submission = Submission.find(params[:submission_id])
+    @sub = Submission.find(params[:submission_id])
   end
 
   private
