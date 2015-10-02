@@ -3,6 +3,7 @@
 <%
   data = JSON.parse @submission.data
  %>
-  <%= field.label %> <br>
-  <%= data[field.id.to_s] %> <br><br>
+  <h4><%= field.label %></h4>
+  <%= data[field.id.to_s] %>
+  <hr />
 <% end %>

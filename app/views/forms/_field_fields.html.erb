@@ -3,7 +3,7 @@
   <div class="field"><%= f.input 'label', label: 'Label', hint: 'Enter a label.', required: true %></div>
   <div class="field"><%= f.input 'hint', label: 'Hint', hint: 'Enter a hint.', required: false %></div>
   <div class="field"><%= f.input 'required', label: 'Is this form required?', required: false, as: :boolean %></div>
-  <div class="field"><%= f.input 'placeholder', label: 'Enter a placeholder.', required: false %></div>
+  <div class="field"><%= f.input 'placeholder', label: 'Enter a placeholder.', required: false, as: :string %></div>
   <div class="field"><%= f.input 'class_name', label: 'Enter a class name.', required: false %></div>
   <div class="field"><%= f.input 'wrapper_class', label: 'Enter a wrapper name.', required: false %></div>
   <%= link_to_remove_association "Remove field", f %>

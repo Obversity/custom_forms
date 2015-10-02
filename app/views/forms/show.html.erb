@@ -1,5 +1,9 @@
-<h1><%= @form.title %></h1>
-<p><%= @form.description %></p>
+<header>
+  <h1><%= @form.title %></h1>
+  <p>
+    <%= @form.description %>
+  </p>
+</header>
 
 <%
 @errors = get_errors
@@ -7,15 +11,25 @@
 %>
 
 <% if !@errors.nil? %>
-  <% @errors.each do |error| %>
-    <%= error %><br />
-  <% end %>
+<div class="errors">
+  <h3>Errors</h3>
+  <ul>
+    <% @errors.each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+</div>
 <% end %>
-
-<%= simple_form_for :submission, url: "submit" do |f| %>
-  <% @form.fields.each do |field| %>
-    <%= f.input field.id.to_s.to_sym, as: field.field_type, label: field.label, hint: field.hint, placeholder: field.placeholder, input_html: {value: @data[field.id.to_s]} %>
+<div id="fields">
+  <%= simple_form_for :submission, url: "submit" do |f| %>
+    <div class="the-fields">
+      <% @form.fields.each do |field| %>
+        <div class="field">
+          <%= f.input field.id.to_s.to_sym, as: field.field_type, label: field.label, hint: field.hint, placeholder: field.placeholder, input_html: {value: @data[field.id.to_s]} %>
+        </div>
+      <% end %>
+    </div>
+    <%= f.input :form_id,as: :hidden, input_html: {value: @form.id.to_s} %>
+    <%= f.submit %>
   <% end %>
-  <%= f.input :form_id,as: :hidden, input_html: {value: @form.id.to_s} %>
-  <%= f.submit %>
-<% end %>
+</div>

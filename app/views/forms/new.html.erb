@@ -15,11 +15,18 @@
 ]
 -->
 
+<header>
+  <h1>New Form</h1>
+  <p>
+    Build your own form, using this clunky interface!
+  </p>
+</header>
 
 <%= simple_form_for @form  do |f| %>
-<%= f.input 'title', hint: 'Enter a tile.', required: true %>
-<%= f.input 'description',  hint: 'Enter a description.', required: false, as: :text %>
-<hr />
+<div class="field_details">
+  <%= f.input 'title', hint: 'Enter a tile.', required: true %>
+  <%= f.input 'description',  hint: 'Enter a description.', required: false, as: :text %>
+</div>
   <!-- <div data-repeater-list="fields">
     <div data-repeater-item> -->
   <div id="fields">
