@@ -2,12 +2,12 @@ class FieldValidation < ActiveRecord::Base
   belongs_to :field
 
   VALIDATION_TYPES = {
-    1=>'required',
-    2=>'email',
-    3=>'regex',
-    4=>'datetime',
-    5=>'number',
-    6=>'length'
+    1=>{name:'required', message: 'is required'},
+    2=>{name:'email', message:'must be a valid email'},
+    3=>{name:'regex', message:'does not fit the necessary format'},
+    4=>{name:'datetime', message:'must be a valid date'},
+    5=>{name:'number', message:'must be a number'},
+    6=>{name:'length', message:'has a maximum length'}
   }
 
   def self.required(value)

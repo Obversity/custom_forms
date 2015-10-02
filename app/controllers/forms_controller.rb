@@ -1,5 +1,9 @@
 class FormsController < ApplicationController
 
+  def index
+    @forms = Form.all
+  end
+
   def show
     @form = Form.find(params[:id])
   end
@@ -9,76 +13,57 @@ class FormsController < ApplicationController
   end
 
   def create
-
     @form = Form.create(form_params)
-    binding.pry
-    # @fields = params[:fields]
-    # @fields.each do |field|
-    #   #TODO: do some fancy field adding magic here
-    # end
-    # binding.pry
+    redirect_to @form
   end
-
-#   private
-#     def forms_params
-#
-#     end
 
   def submit
 
     # get the form's fields
-    form = Form.find(params[:submission][:form_id])
+    @form = Form.find(params[:submission][:form_id])
+
 
     # get the data that was submitted
-    data = params[:submission]
+    @submission = params[:submission]
 
     matches = {}
 
-    data.keys.each do |key|
+    #Date input matching stuff?
+    @submission.keys.each do |key|
 
       match = key.match(/(^(\d)\((.*)\))/)
       unless match.nil?
 
         unless matches[match[2]].nil?
-          data[key] = "#{matches[match[2]]} #{data[key]}"
+          @ubmission[key] = "#{matches[match[2]]} #{submission[key]}"
         end
 
-        matches[match[2]] = data[key]
-        data[key] = nil
+        matches[match[2]] = @submission[key]
+        @submission[key] = nil
       end
 
-      data.merge!(matches)
+      @submission.merge!(matches)
 
     end
 
     # make sure that errors is defined as an array, otherwise things will break
-    errors = []
+    @errors = {}
 
     # validate each field
-    form.fields.each do |field|
-      field.field_validations.each do |validation|
-
-        # check what kind of validation we're doing.
-        validation_type = FieldValidation::VALIDATION_TYPES[validation.validation_id]
-
-        # check whether the value validates
-        valid = FieldValidation.send(validation_type, data[field.id.to_s])
-
-        # push error messages into the errors array
-        errors << "#{field.label} does not validate with #{validation_type} correctly." unless valid
-
-      end
+    @form.fields.each do |field|
+      field_data = @submission[field.id.to_s]
+      field_errors = field.errors2(field_data)
+      @errors[field.id] = field_errors if !field_errors.empty?
     end
 
+    binding.pry
+
     # if we have no errors, submit the form; otherwise reject the submission
-    if errors.length == 0
-      @submission = Submission.create(data: data.to_json, form: form)
+    if @errors.length == 0
+      @submission = Submission.create(data: @submission.to_json, form: @form)
       redirect_to "/forms/read/#{@submission.id}"
     else
-      session[:errors] = errors
-      session[:submission] = data
-
-      redirect_to "/forms/#{form.id}"
+      render :show
     end
 
   end

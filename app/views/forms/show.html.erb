@@ -6,17 +6,18 @@
 </header>
 
 <%
-@errors = get_errors
-@data = get_form_data
-%>
+  @errors = @errors || []
+  @submission = @submission || {}
 
-<% if !@errors.nil? %>
+ %>
+
+<%= binding.pry %>
+
+<% if !@errors.empty? %>
 <div class="errors">
   <h3>Errors</h3>
   <ul>
-    <% @errors.each do |error| %>
-      <li><%= error %></li>
-    <% end %>
+    Your submission contains some errors
   </ul>
 </div>
 <% end %>
@@ -25,7 +26,12 @@
     <div class="the-fields">
       <% @form.fields.each do |field| %>
         <div class="field">
-          <%= f.input field.id.to_s.to_sym, as: field.field_type, label: field.label, hint: field.hint, placeholder: field.placeholder, input_html: {value: @data[field.id.to_s]} %>
+          <%= f.input field.id.to_s.to_sym, as: field.field_type, label: field.label, hint: field.hint, placeholder: field.placeholder, input_html: {value: @submission[field.id.to_s]} %>
+          <% if @errors[field.id].present? %>
+            <div class="inline-errors">
+              <%= "This field #{@errors[field.id].flatten.to_sentence}" %>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>
