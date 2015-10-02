@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
   resources :forms do
     collection do
-      get 'create' => 'forms#create'
       post 'submit'
       get 'read/:submission_id' => 'forms#read'
     end

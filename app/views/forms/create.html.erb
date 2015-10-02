@@ -1,8 +1,0 @@
-
-<% @submission.form.fields.each do |field| %>
-<%
-  data = JSON.parse @submission.data
- %>
-  <%= field.label %> <br>
-  <%= data[field.id.to_s] %> <br><br>
-<% end %>

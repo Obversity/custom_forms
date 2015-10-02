@@ -1,0 +1,50 @@
+<!--
+[
+  "id",
+  "field_type",
+  "label",
+  "hint",
+  "ordinal",
+  "required",
+  "placeholder",
+  "class_name",
+  "wrapper_class",
+  "form_id",
+  "created_at",
+  "updated_at"
+]
+-->
+
+
+<%= simple_form_for @form  do |f| %>
+<%= f.input 'title', hint: 'Enter a tile.', required: true %>
+<%= f.input 'description',  hint: 'Enter a description.', required: false, as: :text %>
+<hr />
+  <!-- <div data-repeater-list="fields">
+    <div data-repeater-item> -->
+  <div id="fields">
+    <%= f.simple_fields_for :fields do |field| %>
+          <%= render 'field_fields', f: field %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'Add field', f, :fields %>
+    </div>
+  </div>
+      <!-- <input data-repeater-delete type="button" value="Delete"/>
+    </div>
+  </div>
+  <input data-repeater-create type="button" value="Add"/> -->
+  <%= f.submit %>
+<% end %>
+
+<script>
+    // $(document).ready(function () {
+    //     $('.repeater').repeater({
+    //         hide: function (deleteElement) {
+    //             if(confirm('Are you sure you want to delete this element?')) {
+    //                 $(this).slideUp(deleteElement);
+    //             }
+    //         },
+    //     })
+    // });
+</script>

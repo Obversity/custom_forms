@@ -4,7 +4,19 @@ class FormsController < ApplicationController
     @form = Form.find(params[:id])
   end
 
+  def new
+    @form = Form.new
+  end
+
   def create
+
+    @form = Form.create(form_params)
+    binding.pry
+    # @fields = params[:fields]
+    # @fields.each do |field|
+    #   #TODO: do some fancy field adding magic here
+    # end
+    # binding.pry
   end
 
 #   private
@@ -73,6 +85,12 @@ class FormsController < ApplicationController
 
   def read
     @submission = Submission.find(params[:submission_id])
+  end
+
+  private
+
+  def form_params
+    params.require(:form).permit(:title, :description, fields_attributes: [:id, :field_type, :label, :hint, :placeholder, :required, :class_name, :wrapper_class])
   end
 
 end
