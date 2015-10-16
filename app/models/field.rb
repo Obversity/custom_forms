@@ -10,7 +10,8 @@ class Field < ActiveRecord::Base
     "url" => 'URL',
     'tel' => 'Phone',
     "integer" => 'Number',
-    "boolean" => "Checkbox"
+    "boolean" => "Checkbox",
+    "check_boxes" => "Checkbox List"
   }
 
   def errors2(data)

@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20151002073443) do
     t.integer  "field_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "value"
   end
 
   create_table "field_validations", force: :cascade do |t|
